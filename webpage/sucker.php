@@ -6,16 +6,19 @@
 	<link href="buyagrade.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-		<h1>Thanks, sucker!</h1>
+		
 		<?php 
 
-	$name=$_REQUEST["Name"];
-	$section=$_REQUEST["Section"];
-	$creditCard=$_REQUEST["creditCard"];
-	$cardType=$_REQUEST["card"];
+	$name=isset($_REQUEST["Name"])?$_REQUEST["Name"]:"";
+	$section=isset($_REQUEST["Section"])?$_REQUEST["Section"]:"";
+	$creditCard=isset($_REQUEST["creditCard"])?$_REQUEST["creditCard"]:"";
+	$cardType=isset($_REQUEST["card"])?$_REQUEST["card"]:"";
 $suckerInfo=$name.";".$section.";".$creditCard.";".$cardType.";".PHP_EOL;
 file_put_contents('listOfSuckers.txt',$suckerInfo,FILE_APPEND);
 		 ?>
+	<?php 	 	 if($name && $section && $creditCard && $cardType){
+		?>
+		 <h1>Thanks, sucker!</h1>
 <p>Your information has been recorded.</p>
 <dl>
 	<dt>
@@ -28,7 +31,14 @@ file_put_contents('listOfSuckers.txt',$suckerInfo,FILE_APPEND);
 	<pre>	
 	<?php 
 echo file_get_contents('listOfSuckers.txt');
+
 	 ?>
 	 </pre>
+	 <?php 	} 
+else{
+	?> <p class="warning">	You didn't fill out the form completely <a href="buyagrade.html">Try again?</a></p>
+	<?php 	
+}
+	 ?>
 </body>
 </html>
